@@ -14,4 +14,5 @@ public class Transaction {
 	private String TransactionId;
 	private String TransactionType;
 	private String WalletReference;
+	private boolean perfectlyMatched;
 }

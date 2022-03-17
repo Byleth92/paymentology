@@ -10,7 +10,7 @@ public class QueryBuilder {
 		
 		StringBuilder sb = new StringBuilder();
 		sb.append(Queries.SELECT_IN_TRANSACTION_SOURCE);
-		sb.append(String.format(Queries.TRANSACTION_SOURCE_EQUALS, transactions.get(0).getTransactionId()));
+		sb.append(String.format(Queries.FIRST_ELEMENT_TRANSACTION_SOURCE_EQUALS, transactions.get(0).getTransactionId()));
 		for(int i=1; i < transactions.size(); i++) {
 			sb.append(String.format(Queries.OR_TRANSACTION_SOURCE_EQUALS, transactions.get(i).getTransactionId()));
 		}

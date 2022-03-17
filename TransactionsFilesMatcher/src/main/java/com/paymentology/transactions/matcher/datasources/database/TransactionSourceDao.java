@@ -17,7 +17,7 @@ public class TransactionSourceDao {
 
 	@Autowired private NamedParameterJdbcTemplate jdbcTemplate;
 	
-	public List<TransactionSource> selectInRange(String query) {
+	public List<TransactionSource> selectInLot(String query) {
 		
 		return jdbcTemplate.query(query, new RowMapper<TransactionSource>(){  
 		    @Override  
@@ -29,7 +29,8 @@ public class TransactionSourceDao {
 		    							.transactionDescription(rs.getString(5))
 		    							.transactionId(rs.getString(6))
 		    							.transactionNarrative(rs.getString(7))
-		    							.walletReference(rs.getString(8))
+		    							.transactionType(rs.getString(8))
+		    							.walletReference(rs.getString(9))
 		    							.build();
 		    }});  
 	}
