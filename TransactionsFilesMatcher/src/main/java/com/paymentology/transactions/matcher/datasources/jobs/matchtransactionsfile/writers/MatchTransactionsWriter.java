@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import com.paymentology.transactions.matcher.datasources.database.TransactionSourceDao;
 import com.paymentology.transactions.matcher.domain.Transaction;
 import com.paymentology.transactions.matcher.entities.TransactionSource;
+import com.paymentology.transactions.matcher.utils.QueryBuilder;
 
 @Component
 public class MatchTransactionsWriter implements ItemWriter<Transaction>{
@@ -17,9 +18,10 @@ public class MatchTransactionsWriter implements ItemWriter<Transaction>{
 	
 	@Override
 	public void write(List<? extends Transaction> items) throws Exception {
+
+		String query = QueryBuilder.buildQueryInLot(items);
+		List<TransactionSource> teste = dao.selectInRange(query);
 		
-		//Continuar
-		List<TransactionSource> teste = dao.selectInRange("SELECT * FROM transaction_source");
 		System.out.println(teste);
 	}
 }
