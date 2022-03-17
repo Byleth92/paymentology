@@ -6,13 +6,13 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.paymentology.transactions.matcher.datasources.batch.steps.Step1;
+import com.paymentology.transactions.matcher.interactors.StoreSourceFileJob;
 
 @SpringBootApplication
 @EnableBatchProcessing
 public class TransactionsFilesMatcherApplication implements CommandLineRunner{
 
-	@Autowired private Step1 jobStarter;
+	@Autowired private StoreSourceFileJob storeSourceFileJob;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(TransactionsFilesMatcherApplication.class, args);
@@ -20,6 +20,6 @@ public class TransactionsFilesMatcherApplication implements CommandLineRunner{
 
 	@Override
 	public void run(String... args) throws Exception {
-		jobStarter.execute();
+		storeSourceFileJob.start();
 	}
 }
