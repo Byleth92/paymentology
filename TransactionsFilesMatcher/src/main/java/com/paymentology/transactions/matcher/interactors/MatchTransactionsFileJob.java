@@ -3,7 +3,7 @@ package com.paymentology.transactions.matcher.interactors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.paymentology.transactions.matcher.datasources.jobs.matchtransactionsfile.steps.MatchTransactionsFileStart;
+import com.paymentology.transactions.matcher.interactors.jobs.matchtransactionsfile.steps.MatchTransactionsFileStart;
 
 @Service
 public class MatchTransactionsFileJob implements Job{

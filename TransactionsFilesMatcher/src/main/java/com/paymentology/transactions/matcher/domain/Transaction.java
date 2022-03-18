@@ -8,11 +8,11 @@ import lombok.Setter;
 public class Transaction {
 	private String profileName;;
 	private String transactionDate;
-	private String TransactionAmount;
-	private String TransactionNarrative;
-	private String TransactionDescription;
-	private String TransactionId;
-	private String TransactionType;
-	private String WalletReference;
+	private String transactionAmount;
+	private String transactionNarrative;
+	private String transactionDescription;
+	private String transactionId;
+	private String transactionType;
+	private String walletReference;
 	private boolean perfectlyMatched;
 }
