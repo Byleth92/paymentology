@@ -31,9 +31,8 @@ public class MatchTransactionsWriter implements ItemWriter<Transaction>{
 		
 		transactionsFromComparingFile = CompareTransactions.match(transactionsFromComparingFile, transactionsFromDatabase);
 		List<Transaction> notPrefectlyMatchedTransactions = transactionsFromComparingFile.stream().filter(t -> !t.isPerfectlyMatched()).collect(Collectors.toList());
-
 	
-		ProbablyMatchedTransactions probablyRelatedTransactions = relatingNotMatchedTransactions.comparingNotRelatedTransactions(notPrefectlyMatchedTransactions);
+		ProbablyMatchedTransactions probablyRelatedTransactions = relatingNotMatchedTransactions.comparingPossibleMatchesForNotMatchedTransactions(notPrefectlyMatchedTransactions);
 		saveProbableMatches(probablyRelatedTransactions);
 	}
 	

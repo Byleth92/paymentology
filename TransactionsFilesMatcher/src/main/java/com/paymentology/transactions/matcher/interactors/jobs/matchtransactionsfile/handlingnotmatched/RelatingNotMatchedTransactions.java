@@ -19,7 +19,7 @@ public class RelatingNotMatchedTransactions {
 
 	@Autowired private TransactionSourceRepository repository;
 	
-	public ProbablyMatchedTransactions comparingNotRelatedTransactions(List<Transaction> notMatchedTransactions) {
+	public ProbablyMatchedTransactions comparingPossibleMatchesForNotMatchedTransactions(List<Transaction> notMatchedTransactions) {
 		
 		ProbablyMatchedTransactions probablyRelatedTransactions = new ProbablyMatchedTransactions();
 		
