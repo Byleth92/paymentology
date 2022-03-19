@@ -22,13 +22,13 @@ class StoreSourceFileJobTest {
 	@Mock private StoreSourceFileStart jobStarter;
 	
 	@Test
-	void test() throws JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException, JobParametersInvalidException {
+	void storeSourceFileJobWithNoErrors() throws JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException, JobParametersInvalidException {
 		doNothing().when(jobStarter).execute();
 		storeSourceFileJob.start();
 	}
 	
 	@Test
-	void test2() throws JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException, JobParametersInvalidException {
+	void storeSourceFileJobWithException() throws JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException, JobParametersInvalidException {
 		doThrow(JobParametersInvalidException.class).when(jobStarter).execute();
 		storeSourceFileJob.start();
 	}

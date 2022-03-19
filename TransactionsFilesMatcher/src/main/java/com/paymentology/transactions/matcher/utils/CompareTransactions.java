@@ -25,13 +25,13 @@ public class CompareTransactions {
 	
 	private static boolean compareAllFields(Transaction transaction, TransactionSource equivalentTransactionFromDatabase) {
 		
-		if(CompareFiledTypes.areStringAndBigDecimalStrEqual(transaction.getTransactionAmount(), equivalentTransactionFromDatabase.getTransactionAmount())
-		&& CompareFiledTypes.areTwoStringsEqual(transaction.getProfileName(), equivalentTransactionFromDatabase.getProfileName())
-		&& CompareFiledTypes.areStringAndLocalDateTimeEqual(transaction.getTransactionDate(), equivalentTransactionFromDatabase.getTransactionDate())
-		&& CompareFiledTypes.areTwoStringsEqual(transaction.getTransactionDescription(), equivalentTransactionFromDatabase.getTransactionDescription())
-		&& CompareFiledTypes.areTwoStringsEqual(transaction.getTransactionNarrative(), equivalentTransactionFromDatabase.getTransactionNarrative())
-		&& CompareFiledTypes.areTwoStringsEqual(transaction.getTransactionType(), equivalentTransactionFromDatabase.getTransactionType())
-		&& CompareFiledTypes.areTwoStringsEqual(transaction.getWalletReference(), equivalentTransactionFromDatabase.getWalletReference()))
+		if(CompareFieldTypes.areStringAndBigDecimalStrEqual(transaction.getTransactionAmount(), equivalentTransactionFromDatabase.getTransactionAmount())
+		&& CompareFieldTypes.areTwoStringsEqual(transaction.getProfileName(), equivalentTransactionFromDatabase.getProfileName())
+		&& CompareFieldTypes.areStringAndLocalDateTimeEqual(transaction.getTransactionDate(), equivalentTransactionFromDatabase.getTransactionDate())
+		&& CompareFieldTypes.areTwoStringsEqual(transaction.getTransactionDescription(), equivalentTransactionFromDatabase.getTransactionDescription())
+		&& CompareFieldTypes.areTwoStringsEqual(transaction.getTransactionNarrative(), equivalentTransactionFromDatabase.getTransactionNarrative())
+		&& CompareFieldTypes.areTwoStringsEqual(transaction.getTransactionType(), equivalentTransactionFromDatabase.getTransactionType())
+		&& CompareFieldTypes.areTwoStringsEqual(transaction.getWalletReference(), equivalentTransactionFromDatabase.getWalletReference()))
 			return true;
 		
 		return false;

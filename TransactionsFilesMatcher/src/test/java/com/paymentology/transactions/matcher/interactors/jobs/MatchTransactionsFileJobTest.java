@@ -22,13 +22,13 @@ class MatchTransactionsFileJobTest {
 	@Mock private MatchTransactionsFileStart matchTransactionsFileStart;
 	
 	@Test
-	void test() throws JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException, JobParametersInvalidException {
+	void startTransactionsJobWithNoError() throws JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException, JobParametersInvalidException {
 		doNothing().when(matchTransactionsFileStart).execute();
 		matchTransactionsFileJob.start();
 	}
 	
 	@Test
-	void test2() throws JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException, JobParametersInvalidException {
+	void startTransactionsWithException() throws JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException, JobParametersInvalidException {
 		
 		doThrow(JobParametersInvalidException.class).when(matchTransactionsFileStart).execute();
 		matchTransactionsFileJob.start();

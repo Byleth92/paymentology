@@ -15,5 +15,5 @@ class ProbableMatchesTest {
 	@Mock private ProbableMatchTransactionRepository repository;
 	
 	@Test
-	void test() {probableMatches.getAll();}
+	void getAllProbableMatches() {probableMatches.getAll();}
 }

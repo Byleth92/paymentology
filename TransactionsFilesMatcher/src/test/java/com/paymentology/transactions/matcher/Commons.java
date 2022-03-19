@@ -31,10 +31,10 @@ public class Commons {
 				 .walletReference("walletReference")
 				 .build();
 		
-		String[] valuesTest = Arrays.array("profileName", "2021-10-02 10:00:00", "10", "transactionAmount", "transactionNarrative", "transactionDescription", "transactionId", "transactionType", "walletReference");
+		String[] valuesTest = Arrays.array("profileName", "2021-10-02 10:00:00", "10", "transactionNarrative", "transactionDescription", "transactionId", "transactionType", "walletReference");
 		transaction1 = TransactionFactory.create(valuesTest);
 		
-		valuesTest = Arrays.array("profileName2", "2021-10-02 10:00:00", "1430.00", "transactionAmount2", "transactionNarrative2", "transactionDescription2", "transactionId2", "transactionType2", "walletReference2");
+		valuesTest = Arrays.array("profileName2", "2021-10-02 10:00:00", "1430.00", "transactionNarrative2", "transactionDescription2", "", "transactionId2", "transactionType2", "walletReference2");
 		transaction2 = TransactionFactory.create(valuesTest);
 		
 		probablyMatchedTransactions = new ProbablyMatchedTransactions();
