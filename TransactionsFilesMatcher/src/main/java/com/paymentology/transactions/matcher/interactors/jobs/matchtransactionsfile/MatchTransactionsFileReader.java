@@ -14,8 +14,7 @@ import com.paymentology.transactions.matcher.interactors.jobs.CsvLineMapper;
 @Component
 public class MatchTransactionsFileReader {
 
-	@Autowired
-	private CsvLineMapper<Transaction> lineMapper;
+	@Autowired private CsvLineMapper<Transaction> lineMapper;
 
 	@Bean
 	@JobScope

@@ -20,9 +20,7 @@ import com.paymentology.transactions.matcher.utils.QueryBuilder;
 public class MatchTransactionsWriter implements ItemWriter<Transaction>{
 
 	@Autowired private TransactionSourceDao dao;
-	
 	@Autowired private RelatingNotMatchedTransactions relatingNotMatchedTransactions;
-	
 	@Autowired private ProbableMatchTransactionRepository probableMatchTransactionRepository;
 	
 	@Override
