@@ -53,6 +53,6 @@ public class CompareTransactions {
 			if(Objects.nonNull(transactionNotMatched.getWalletReference()) && transactionNotMatched.getWalletReference().equals(transactionFromDatabase.getWalletReference()))
 				identicalValuesCounter++;
 			
-			return identicalValuesCounter > PROBABLY_RELATED_EQUAL_VALUES_REFERENCE_NUMBER;
+			return identicalValuesCounter >= PROBABLY_RELATED_EQUAL_VALUES_REFERENCE_NUMBER;
 	}
 }
