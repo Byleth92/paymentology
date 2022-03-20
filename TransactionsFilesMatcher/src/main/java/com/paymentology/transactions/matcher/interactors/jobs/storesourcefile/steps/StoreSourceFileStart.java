@@ -1,5 +1,7 @@
 package com.paymentology.transactions.matcher.interactors.jobs.storesourcefile.steps;
 
+import java.io.File;
+import java.net.MalformedURLException;
 import java.util.UUID;
 
 import org.springframework.batch.core.JobParameters;
@@ -30,7 +32,10 @@ public class StoreSourceFileStart {
 	@Autowired private StoreSourceWriter writer;
 	@Autowired private JobLauncher jobLauncher;
 	
-	  public void execute() throws JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException, JobParametersInvalidException {
+	  public void execute(File file1, File file2) throws JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException, JobParametersInvalidException, MalformedURLException {
+		  
+		  reader.setFile1(file1);
+		  listener.setFile2(file2);
 		  
 		  SimpleJobBuilder jobBuilder = jobBuilderFactory.get(UUID.randomUUID().toString())
 				     .listener(listener)

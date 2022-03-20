@@ -12,7 +12,7 @@
 <body>
 	<h2 style="text-align: center;">Try matching the transactions within two Csv files</h2>
 
-	<form action="${pageContext.request.contextPath}/upload-csv-files" method="post" enctype="multipart/form-data">
+	<form action="${pageContext.request.contextPath}/match-transactions" method="post" enctype="multipart/form-data">
 		<table style="width: 30%; margin-left: auto; margin-right: auto; text-align: center;">
 			<thead>
 				<tr>

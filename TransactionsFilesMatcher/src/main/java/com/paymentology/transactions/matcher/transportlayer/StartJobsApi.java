@@ -1,13 +1,15 @@
 package com.paymentology.transactions.matcher.transportlayer;
 
+import java.util.Objects;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.paymentology.transactions.matcher.interactors.jobs.Flag;
 import com.paymentology.transactions.matcher.interactors.jobs.StoreSourceFileJob;
 
 @RestController
@@ -16,15 +18,18 @@ public class StartJobsApi {
 
 	@Autowired private StoreSourceFileJob storeSourceFileJob;
 	
-	@GetMapping("/matchTransactions")
-	public ModelAndView get() {
+	@PostMapping("/match-transactions")
+	public ModelAndView get(MultipartFile file1, MultipartFile file2) {
 		
-		if(Flag.isJobRunning)
+		if(Objects.isNull(file1) || 
+				   Objects.isNull(file2) || 
+				   Objects.isNull(file1.getOriginalFilename()) || 
+				   Objects.isNull(file2.getOriginalFilename())) {
 			return null;
+		}
 		
-		new Thread(() -> {
-			try {storeSourceFileJob.start();} 
-			catch (Exception e) {e.printStackTrace();}}).start();		
+		try {storeSourceFileJob.start(file1, file2);} 
+		catch (Exception e) {e.printStackTrace();};		
 		
 		return null;
 	}
