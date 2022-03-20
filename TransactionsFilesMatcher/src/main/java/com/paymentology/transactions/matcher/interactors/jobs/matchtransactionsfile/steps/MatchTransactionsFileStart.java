@@ -34,6 +34,7 @@ public class MatchTransactionsFileStart {
 	
 	  public void execute(File file2) throws JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException, JobParametersInvalidException, MalformedURLException {
 		  
+		  listener.setFile2(file2);
 		  reader.setFile2(file2);
 		  
 		  SimpleJobBuilder jobBuilder = jobBuilderFactory.get(UUID.randomUUID().toString())

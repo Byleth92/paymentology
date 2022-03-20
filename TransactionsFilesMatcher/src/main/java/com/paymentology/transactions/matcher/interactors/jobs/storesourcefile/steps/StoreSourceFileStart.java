@@ -35,6 +35,7 @@ public class StoreSourceFileStart {
 	  public void execute(File file1, File file2) throws JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException, JobParametersInvalidException, MalformedURLException {
 		  
 		  reader.setFile1(file1);
+		  listener.setFile1(file1);
 		  listener.setFile2(file2);
 		  
 		  SimpleJobBuilder jobBuilder = jobBuilderFactory.get(UUID.randomUUID().toString())
@@ -46,5 +47,5 @@ public class StoreSourceFileStart {
 				     .chunk(50).build());
 		  
 		  jobLauncher.run(jobBuilder.build(), new JobParameters());
-	  }	  
+	  }
 }

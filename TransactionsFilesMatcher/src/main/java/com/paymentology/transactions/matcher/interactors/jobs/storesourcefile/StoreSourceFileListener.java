@@ -18,6 +18,7 @@ import lombok.Setter;
 public class StoreSourceFileListener implements JobExecutionListener {
 	
 	@Autowired private MatchTransactionsFileJob matchTransactionsFileJob;
+	private File file1;
 	private File file2;
 	
 	@Override
@@ -25,6 +26,7 @@ public class StoreSourceFileListener implements JobExecutionListener {
 
 	@Override
 	public void afterJob(JobExecution jobExecution) {
+		file1.delete();
 		matchTransactionsFileJob.start(file2);
 	}
 }

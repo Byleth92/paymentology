@@ -12,7 +12,6 @@ public class MatchTransactionsFromFilesApi {
 
 	@GetMapping("/matchFiles")
 	public ModelAndView get() {
-		
 		return new ModelAndView("/matchTransactionsFromFiles");
 	}
 }
