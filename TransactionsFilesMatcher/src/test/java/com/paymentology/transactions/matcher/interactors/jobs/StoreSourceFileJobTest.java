@@ -20,6 +20,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.paymentology.transactions.matcher.interactors.jobs.storesourcefile.steps.StoreSourceFileStart;
+import com.paymentology.transactions.matcher.respositories.ProbableMatchTransactionRepository;
+import com.paymentology.transactions.matcher.respositories.ProbablyNotFoundMatchRepository;
+import com.paymentology.transactions.matcher.respositories.TransactionProcessingErrorsRepository;
+import com.paymentology.transactions.matcher.respositories.TransactionSourceRepository;
 
 @ExtendWith(MockitoExtension.class)
 class StoreSourceFileJobTest {
@@ -30,6 +34,10 @@ class StoreSourceFileJobTest {
 	@Mock private MultipartFile file2;
 	@Mock private RedirectAttributes redir;
 	@Mock private ProbableMatches probableMatches;
+	@Mock private TransactionProcessingErrorsRepository errorsRepository;
+	@Mock private TransactionSourceRepository repository;
+	@Mock private ProbableMatchTransactionRepository probableMatchRepository;
+	@Mock private ProbablyNotFoundMatchRepository probablyNotFoundMatchRepository;
 	
 	@Test
 	void storeSourceFileJobWithNoErrors() throws JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException, JobParametersInvalidException, IllegalStateException, IOException {

@@ -32,6 +32,7 @@ public class MatchTransactionsFileStart {
 	@Autowired private MatchTransactionsWriter writer;
 	@Autowired private JobLauncher jobLauncher;
 	
+	/** Method responsible for configuring the settings regarding the matching of the previously stored source file and coming data from the match file .*/
 	  public void execute(File file2) throws JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException, JobParametersInvalidException, MalformedURLException {
 		  
 		  listener.setFile2(file2);

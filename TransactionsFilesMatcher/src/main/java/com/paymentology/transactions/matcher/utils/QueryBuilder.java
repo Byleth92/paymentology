@@ -6,6 +6,8 @@ import com.paymentology.transactions.matcher.constants.Queries;
 import com.paymentology.transactions.matcher.domain.Transaction;
 
 public class QueryBuilder {
+	
+	/** Method responsible for concatenating all data in one select, instead of doing many selects*/
 	public static String buildQueryInLot(List<? extends Transaction> transactions) {
 		
 		StringBuilder sb = new StringBuilder();

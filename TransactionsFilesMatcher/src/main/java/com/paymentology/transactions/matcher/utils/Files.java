@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.paymentology.transactions.matcher.constants.BatchSettings;
 
+/** Util class for files manipulation.*/
 public class Files {
 	
 	public static File saveSourceFile(MultipartFile file1) throws IllegalStateException, IOException {

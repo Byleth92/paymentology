@@ -9,26 +9,32 @@ import org.springframework.stereotype.Component;
 import com.paymentology.transactions.matcher.domain.ProbablyMatchedTransactions;
 import com.paymentology.transactions.matcher.domain.Transaction;
 import com.paymentology.transactions.matcher.entities.ProbableMatchTransaction;
+import com.paymentology.transactions.matcher.entities.TransactionProcessingErrors;
 import com.paymentology.transactions.matcher.entities.TransactionSource;
+import com.paymentology.transactions.matcher.enums.Jobs;
+import com.paymentology.transactions.matcher.respositories.TransactionProcessingErrorsRepository;
 import com.paymentology.transactions.matcher.respositories.TransactionSourceRepository;
-import com.paymentology.transactions.matcher.utils.CompareTransactions;
+import com.paymentology.transactions.matcher.utils.FindProbableMatches;
 import com.paymentology.transactions.matcher.utils.TransactionSourceConvert;
 
 @Component
 public class RelatingNotMatchedTransactions {
 
 	@Autowired private TransactionSourceRepository repository;
+	@Autowired private TransactionProcessingErrorsRepository repositoryErrors;
 	
+	/** Method responsible for storing within two lists from a single object every probable match in index order. That is, index 0 of one list corresponds to a possible match from index 0 the other list. */
 	public ProbablyMatchedTransactions comparingPossibleMatchesForNotMatchedTransactions(List<Transaction> notMatchedTransactions) {
 		
 		ProbablyMatchedTransactions probablyRelatedTransactions = new ProbablyMatchedTransactions();
 		
 		for(Transaction transaction: notMatchedTransactions) {
-			
+			try {
+				
 			TransactionSource convertedNotMatchTransaction = TransactionSourceConvert.convert(transaction);
 			List<TransactionSource> candidates = repository.findByTransactionIdOrTransactionDate(convertedNotMatchTransaction.getTransactionId(), convertedNotMatchTransaction.getTransactionDate());
 			candidates.stream().forEach(c -> {
-				if(CompareTransactions.isProbablyRelated(convertedNotMatchTransaction, c)) {
+				if(FindProbableMatches.isProbablyRelated(convertedNotMatchTransaction, c)) {
 			
 					String probableMatchBidirectionalId = UUID.randomUUID().toString();
 					
@@ -61,12 +67,23 @@ public class RelatingNotMatchedTransactions {
 											   .transactionType(c.getTransactionType())
 											   .walletReference(c.getWalletReference())
 											   .build());
-				}
-				else {
-					System.out.println();
-				}
+					}
 			});
 		}
-		return probablyRelatedTransactions;
+		catch(Exception e) {
+			repositoryErrors.save(TransactionProcessingErrors.builder()
+								 .profileName(transaction.getProfileName())
+								 .transactionDate(transaction.getTransactionDate())
+								 .transactionAmount(transaction.getTransactionAmount())
+								 .transactionNarrative(transaction.getTransactionNarrative())
+								 .transactionDescription(transaction.getTransactionDescription())
+								 .transactionId(transaction.getTransactionId())
+								 .transactionType(transaction.getTransactionType())
+								 .walletReference(transaction.getWalletReference())
+								 .file(Jobs.MATCH.name())
+								 .build());
+		}
+	}
+	return probablyRelatedTransactions;
 	}
 }

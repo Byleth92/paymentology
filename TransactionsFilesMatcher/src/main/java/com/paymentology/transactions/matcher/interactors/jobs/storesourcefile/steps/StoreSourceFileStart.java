@@ -32,6 +32,7 @@ public class StoreSourceFileStart {
 	@Autowired private StoreSourceWriter writer;
 	@Autowired private JobLauncher jobLauncher;
 	
+	/** Method responsible for configuring the settings regarding the reading and storing of the requested source file.*/
 	  public void execute(File file1, File file2) throws JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException, JobParametersInvalidException, MalformedURLException {
 		  
 		  reader.setFile1(file1);

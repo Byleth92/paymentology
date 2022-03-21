@@ -12,6 +12,7 @@ import com.paymentology.transactions.matcher.models.TransactionsMatcherModels;
 @Scope(value = WebApplicationContext.SCOPE_REQUEST)
 public class MatchTransactionsFromFilesApi {
 
+	/** Api Responsible for redirecting to the matchFiles page.*/
 	@GetMapping("/matchFiles")
 	public ModelAndView get() {
 		return TransactionsMatcherModels.matchTransactionsFromFile();

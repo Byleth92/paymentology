@@ -27,6 +27,8 @@ public class StoreSourceFileListener implements JobExecutionListener {
 	@Override
 	public void afterJob(JobExecution jobExecution) {
 		file1.delete();
+		
+		/** Initializing second job, responsible for matching the stored data from the source file and matching its information with the match file.*/
 		matchTransactionsFileJob.start(file2);
 	}
 }

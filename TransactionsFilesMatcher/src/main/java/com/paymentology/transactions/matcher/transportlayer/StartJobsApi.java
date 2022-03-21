@@ -21,6 +21,7 @@ public class StartJobsApi {
 
 	@Autowired private StoreSourceFileJob storeSourceFileJob;
 	
+	/** Api Responsible for receiving the requested files to start processing the jobs.*/
 	@PostMapping("/matchFiles")
 	public ModelAndView get(MultipartFile file1, MultipartFile file2, RedirectAttributes redir) {
 		
@@ -29,8 +30,6 @@ public class StartJobsApi {
 			   (!file1.getOriginalFilename().toUpperCase().endsWith(Strings.CSV_EXTENSION) || !file2.getOriginalFilename().toUpperCase().endsWith(Strings.CSV_EXTENSION)))
 			return TransactionsMatcherModels.matchTransactionsFromFileErrorBothFilesNeeded(redir);
 		
-		try {return storeSourceFileJob.start(file1, file2, redir);}
-		catch (Exception e) {e.printStackTrace();};		
-		return null;
+		return storeSourceFileJob.start(file1, file2, redir);
 	}
 }
