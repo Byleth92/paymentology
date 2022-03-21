@@ -9,9 +9,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.paymentology.transactions.matcher.interactors.jobs.ProbableMatches;
+import com.paymentology.transactions.matcher.constants.Strings;
 import com.paymentology.transactions.matcher.interactors.jobs.StoreSourceFileJob;
+import com.paymentology.transactions.matcher.models.TransactionsMatcherModels;
 
 @RestController
 @Scope(value = WebApplicationContext.SCOPE_REQUEST)
@@ -19,22 +21,16 @@ public class StartJobsApi {
 
 	@Autowired private StoreSourceFileJob storeSourceFileJob;
 	
-	@PostMapping("/match-transactions")
-	public ModelAndView get(MultipartFile file1, MultipartFile file2) {
+	@PostMapping("/matchFiles")
+	public ModelAndView get(MultipartFile file1, MultipartFile file2, RedirectAttributes redir) {
 		
-		if(Objects.isNull(file1) || 
-				   Objects.isNull(file2) || 
-				   Objects.isNull(file1.getOriginalFilename()) || 
-				   Objects.isNull(file2.getOriginalFilename())) {
-			return new ModelAndView("/matchTransactionsFromFiles")
-						.addObject("error", "There is already a file with the same name as at least one of the files you've uploaded being processed. Change you files names and retry, or try again later.");
-		}
+			if((Objects.isNull(file1) || Objects.isNull(file2)) || 
+			   (file1.getOriginalFilename().isEmpty() || file2.getOriginalFilename().isEmpty()) ||
+			   (!file1.getOriginalFilename().toUpperCase().endsWith(Strings.CSV_EXTENSION) || !file2.getOriginalFilename().toUpperCase().endsWith(Strings.CSV_EXTENSION)))
+			return TransactionsMatcherModels.matchTransactionsFromFileErrorBothFilesNeeded(redir);
 		
-		try {
-			return storeSourceFileJob.start(file1, file2);
-		} 
+		try {return storeSourceFileJob.start(file1, file2, redir);} 
 		catch (Exception e) {e.printStackTrace();};		
-		
 		return null;
 	}
 }

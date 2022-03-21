@@ -27,12 +27,12 @@ class StoreSourceFileJobTest {
 	@Test
 	void storeSourceFileJobWithNoErrors() throws JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException, JobParametersInvalidException, MalformedURLException {
 		doNothing().when(jobStarter).execute(Mockito.any(), Mockito.any());
-		storeSourceFileJob.start(null, null);
+		storeSourceFileJob.start(null, null, null);
 	}
 	
 	@Test
 	void storeSourceFileJobWithException() throws JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException, JobParametersInvalidException, MalformedURLException {
 		doThrow(JobParametersInvalidException.class).when(jobStarter).execute(Mockito.any(), Mockito.any());
-		storeSourceFileJob.start(null, null);
+		storeSourceFileJob.start(null, null, null);
 	}
 }

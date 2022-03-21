@@ -6,12 +6,14 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.paymentology.transactions.matcher.models.TransactionsMatcherModels;
+
 @RestController
 @Scope(value = WebApplicationContext.SCOPE_REQUEST)
 public class MatchTransactionsFromFilesApi {
 
 	@GetMapping("/matchFiles")
 	public ModelAndView get() {
-		return new ModelAndView("/matchTransactionsFromFiles");
+		return TransactionsMatcherModels.matchTransactionsFromFile();
 	}
 }
