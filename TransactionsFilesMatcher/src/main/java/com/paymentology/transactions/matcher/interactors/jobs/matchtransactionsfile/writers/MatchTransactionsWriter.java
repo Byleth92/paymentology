@@ -1,5 +1,7 @@
 package com.paymentology.transactions.matcher.interactors.jobs.matchtransactionsfile.writers;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -7,12 +9,15 @@ import org.springframework.batch.item.ItemWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.paymentology.transactions.matcher.constants.DatesAndTime;
 import com.paymentology.transactions.matcher.datasources.database.TransactionSourceDao;
 import com.paymentology.transactions.matcher.domain.ProbablyMatchedTransactions;
 import com.paymentology.transactions.matcher.domain.Transaction;
+import com.paymentology.transactions.matcher.entities.ProbablyNotFoundMatch;
 import com.paymentology.transactions.matcher.entities.TransactionSource;
 import com.paymentology.transactions.matcher.interactors.jobs.matchtransactionsfile.handlingnotmatched.RelatingNotMatchedTransactions;
 import com.paymentology.transactions.matcher.respositories.ProbableMatchTransactionRepository;
+import com.paymentology.transactions.matcher.respositories.ProbablyNotFoundMatchRepository;
 import com.paymentology.transactions.matcher.utils.CompareTransactions;
 import com.paymentology.transactions.matcher.utils.QueryBuilder;
 
@@ -22,11 +27,13 @@ public class MatchTransactionsWriter implements ItemWriter<Transaction>{
 	@Autowired private TransactionSourceDao dao;
 	@Autowired private RelatingNotMatchedTransactions relatingNotMatchedTransactions;
 	@Autowired private ProbableMatchTransactionRepository probableMatchTransactionRepository;
+	@Autowired private ProbablyNotFoundMatchRepository probablyNotFoundMatchRepository;
 	
 	@Override
 	public void write(List<? extends Transaction> transactionsFromComparingFile) throws Exception {
 
 		String query = QueryBuilder.buildQueryInLot(transactionsFromComparingFile);
+		
 		List<TransactionSource> transactionsFromDatabase = dao.selectInLot(query);
 		
 		transactionsFromComparingFile = CompareTransactions.match(transactionsFromComparingFile, transactionsFromDatabase);
@@ -34,12 +41,38 @@ public class MatchTransactionsWriter implements ItemWriter<Transaction>{
 	
 		ProbablyMatchedTransactions probablyRelatedTransactions = relatingNotMatchedTransactions.comparingPossibleMatchesForNotMatchedTransactions(notPrefectlyMatchedTransactions);
 		saveProbableMatches(probablyRelatedTransactions);
+		
+		for(int i=0; i < transactionsFromComparingFile.size(); i++) {
+			
+			final String transactionId = transactionsFromComparingFile.get(i).getTransactionId();
+			if(!transactionsFromDatabase.stream().filter(t -> t.getTransactionId().equals(transactionId)).findFirst().isPresent()) {
+				saveProbablyNotFound(transactionsFromComparingFile.get(i));
+			}
+		}
 	}
 	
 	private void saveProbableMatches(ProbablyMatchedTransactions probablyRelatedTransactions) {
 		for(int i=0; i < probablyRelatedTransactions.getNotMatchedTransactions().size(); i++) {
 			probableMatchTransactionRepository.save(probablyRelatedTransactions.getNotMatchedTransactions().get(i));
 			probableMatchTransactionRepository.save(probablyRelatedTransactions.getProbableMatchedTransactions().get(i));
+		}
+	}
+	
+	private void saveProbablyNotFound(Transaction p) {
+		
+		if(probableMatchTransactionRepository.findByTransactionId(p.getTransactionId()).size() == 0) {
+			
+			ProbablyNotFoundMatch pnm = ProbablyNotFoundMatch.builder()
+															 .profileName(p.getProfileName())
+															 .transactionDate(LocalDateTime.parse(p.getTransactionDate(), DatesAndTime.FORMATTER_DATE_TIME_ddMMyyyy_HHmmss))
+															 .transactionAmount(new BigDecimal(p.getTransactionAmount()))
+															 .transactionNarrative(p.getTransactionNarrative())
+															 .transactionDescription(p.getTransactionDescription())
+															 .transactionId(p.getTransactionId())
+															 .transactionType(p.getTransactionType())
+															 .walletReference(p.getWalletReference())
+															 .build();
+			probablyNotFoundMatchRepository.save(pnm);
 		}
 	}
 }

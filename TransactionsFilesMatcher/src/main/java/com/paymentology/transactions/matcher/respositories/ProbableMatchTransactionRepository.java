@@ -10,4 +10,5 @@ import com.paymentology.transactions.matcher.entities.ProbableMatchTransaction;
 @Repository
 public interface ProbableMatchTransactionRepository extends JpaRepository<ProbableMatchTransaction, Integer>{
 	public List<ProbableMatchTransaction> findAllByOrderById();
+	public List<ProbableMatchTransaction> findByTransactionId(String transactionId);
 }

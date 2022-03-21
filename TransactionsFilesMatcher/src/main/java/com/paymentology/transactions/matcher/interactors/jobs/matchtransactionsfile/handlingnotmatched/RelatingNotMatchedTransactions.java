@@ -62,6 +62,9 @@ public class RelatingNotMatchedTransactions {
 											   .walletReference(c.getWalletReference())
 											   .build());
 				}
+				else {
+					System.out.println();
+				}
 			});
 		}
 		return probablyRelatedTransactions;
