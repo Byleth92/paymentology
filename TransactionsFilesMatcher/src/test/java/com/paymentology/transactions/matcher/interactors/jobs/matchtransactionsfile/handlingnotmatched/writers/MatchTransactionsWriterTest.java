@@ -19,6 +19,7 @@ import com.paymentology.transactions.matcher.entities.TransactionSource;
 import com.paymentology.transactions.matcher.interactors.jobs.matchtransactionsfile.handlingnotmatched.RelatingNotMatchedTransactions;
 import com.paymentology.transactions.matcher.interactors.jobs.matchtransactionsfile.writers.MatchTransactionsWriter;
 import com.paymentology.transactions.matcher.respositories.ProbableMatchTransactionRepository;
+import com.paymentology.transactions.matcher.respositories.ProbablyNotFoundMatchRepository;
 
 @ExtendWith(MockitoExtension.class)
 class MatchTransactionsWriterTest extends Commons{
@@ -27,12 +28,14 @@ class MatchTransactionsWriterTest extends Commons{
 	@Mock private TransactionSourceDao dao;
 	@Mock private RelatingNotMatchedTransactions relatingNotMatchedTransactions;
 	@Mock private ProbableMatchTransactionRepository probableMatchTransactionRepository;
+	@Mock private ProbablyNotFoundMatchRepository probablyNotFoundMatchRepository;
 	
 	@Test
 	void matchTransactionWriter() throws Exception {
 		
 		List<Transaction> listTransaction = new ArrayList<>();
 		listTransaction.add(transaction1);
+		listTransaction.add(transaction2);
 		
 		List<TransactionSource> listTransactionSource = new ArrayList<>();
 		listTransactionSource.add(transactionSource1);
