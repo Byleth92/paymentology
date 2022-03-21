@@ -19,7 +19,7 @@
 <body>
 	<img src="${pageContext.request.contextPath}/images/paymentologySymbol.png" style="height: 50px;">
 	<br/><br/>
-	<div style="text-align: center;"><label style="text-align: center; font-family: fangsong; font-weight: bold;">Try matching the transactions within two Csv files</label></div>
+	<div style="text-align: center;"><label style="text-align: center; font-family: fangsong; font-weight: bold;">Try matching the transactions within two Csv files. Just upload 2 files and click 'Match Files'.</label></div>
 	<br/>
 	<form action="${pageContext.request.contextPath}/matchFiles" method="post" enctype="multipart/form-data">
 		<c:if test="${not empty error}"><h3 style="border: 1px solid black; width: 60%; border-style: double; color: darkred; text-align: center; margin-left: auto; margin-right: auto;">${error}</h3><br/></c:if>
@@ -49,11 +49,11 @@
 		</table>
 		<div style="text-align: center;">
 		<input class="submitButton" style="" 
-				type="submit" value="Start"></div>
+				type="submit" value="Match Files"></div>
 	</form>
 	<br/>
 	<c:if test="${not empty probableMatches}">
-		<div style="text-align: center;"><label style="text-align: center; font-family: fangsong; font-weight: bold;">Some transactions were not correlated when matching the files. The list below shows probable matches  of those, separated by lines.</label></div>
+		<div style="text-align: center;"><label style="text-align: center; font-family: fangsong; font-weight: bold;">Some transactions were not correlated when matching the files. The list below shows possible matches  of those, separated by lines.</label></div>
 		<br/>
 		<table style="width: 98%; margin-left: auto; margin-right: auto; text-align: center; border-style: groove; border-collapse: collapse;">
 			<thead style="display: block;">
@@ -95,6 +95,38 @@
 							</tr>					
 						</c:otherwise>
 					</c:choose>
+				</c:forEach>
+			</tbody>
+		</table>
+	</c:if>
+	<br/>
+	<c:if test="${not empty notFoundMatches}">
+		<div style="text-align: center;"><label style="text-align: center; font-family: fangsong; font-weight: bold;">Below are transactions where possible matches were not quickly found.</label></div>
+		<br/>
+		<table style="width: 98%; margin-left: auto; margin-right: auto; text-align: center; border-style: groove; border-collapse: collapse;">
+			<thead style="display: block;">
+				<tr>
+					<th style="width:12%; color: white; background-color: #0F1F38; min-width: 100px">PROFILE NAME</th>
+					<th style="width:8%; color: white; background-color: #0F1F38; min-width: 140px">TRANSACTION AMOUNT</th>
+					<th style="width:11%; color: white; background-color: #0F1F38; min-width: 110px">TRANSACTION DATE</th>
+					<th style="width:9%; color: white; background-color: #0F1F38; min-width: 130px">TRANSACTION DESCRIPTION</th>
+					<th style="width:11%; color: white; background-color: #0F1F38; min-width: 120px">TRANSACTION ID</th>
+					<th style="width:25%; color: white; background-color: #0F1F38; min-width: 200px">TRANSACTION NARRATIVE</th>
+					<th style="width:8%; color: white; background-color: #0F1F38; min-width: 120px">TRANSACTION TYPE</th>
+					<th style="width:16%; color: white; background-color: #0F1F38; min-width: 360px">WALLET REFERENCE</th>
+				</tr>
+			<tbody style=" height: 250px; overflow-y: auto; overflow-x: hidden; display: block;">
+				<c:forEach items="${notFoundMatches}" var="m" varStatus="loop">
+					<tr>
+						<td style="width:12%; border-bottom-style: ridge; border-bottom: 1.8px solid black; border-bottom-color: black; height: 35px; min-width: 90px">${m.profileName}</td>
+						<td style="width:8%; border-bottom-style: ridge; border-bottom: 1.8px solid black;  border-bottom-color: black; height: 35px; min-width: 130px">${m.transactionAmount}</td>
+						<td style="width:11%; border-bottom-style: ridge; border-bottom: 1.8px solid black;  border-bottom-color: black; height: 35px; min-width: 150px">${m.transactionDate}</td>
+						<td style="width:9%; border-bottom-style: ridge; border-bottom: 1.8px solid black;  border-bottom-color: black; height: 35px; min-width: 100px">${m.transactionDescription}</td>
+						<td style="width:11%; border-bottom-style: ridge; border-bottom: 1.8px solid black;  border-bottom-color: black; height: 35px; min-width: 140px">${m.transactionId}</td>
+						<td style="width:25%; border-bottom-style: ridge; border-bottom: 1.8px solid black;  border-bottom-color: black; height: 35px; min-width: 130px">${m.transactionNarrative}</td>
+						<td style="width:8%; border-bottom-style: ridge; border-bottom: 1.8px solid black;  border-bottom-color: black; height: 35px; min-width: 100px">${m.transactionType}</td>
+						<td style="width:16%; border-bottom-style: ridge; border-bottom: 1.8px solid black;  border-bottom-color: black;height: 35px; min-width: 100px">${m.walletReference}</td>
+					</tr>					
 				</c:forEach>
 			</tbody>
 		</table>

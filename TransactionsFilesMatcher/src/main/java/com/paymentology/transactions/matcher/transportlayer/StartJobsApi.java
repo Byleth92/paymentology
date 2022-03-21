@@ -29,7 +29,7 @@ public class StartJobsApi {
 			   (!file1.getOriginalFilename().toUpperCase().endsWith(Strings.CSV_EXTENSION) || !file2.getOriginalFilename().toUpperCase().endsWith(Strings.CSV_EXTENSION)))
 			return TransactionsMatcherModels.matchTransactionsFromFileErrorBothFilesNeeded(redir);
 		
-		try {return storeSourceFileJob.start(file1, file2, redir);} 
+		try {return storeSourceFileJob.start(file1, file2, redir);}
 		catch (Exception e) {e.printStackTrace();};		
 		return null;
 	}

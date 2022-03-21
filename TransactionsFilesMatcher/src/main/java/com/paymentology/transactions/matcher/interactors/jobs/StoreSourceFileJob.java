@@ -30,6 +30,7 @@ public class StoreSourceFileJob {
 				
 			jobStarter.execute(source, match);
 			redir.addFlashAttribute(Models.PROBABLE_MATCHES_PARAM, probableMatches.getAll());
+			redir.addFlashAttribute(Models.NOT_FOUND_MATCHES_PARAM, probableMatches.getAllProbablyNotFound());
 			return TransactionsMatcherModels.matchTransactionsFromFileRedirect();
 			}
 		catch(Exception e) {
